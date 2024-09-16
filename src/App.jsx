@@ -1,13 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import { useState, useEffect } from 'react'
 import Header from './components/Header.jsx'
 import Guitar from './components/Guitar.jsx'
+import {db} from './data/db'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState(db)
+  const [cart, setCart]= useState([])
+
+  function addToCart(item) {
+    setCart(prevVart =>[...prevVart, item])
+  }
 
   return (
     <>
@@ -17,13 +19,15 @@ function App() {
         <h2 className="text-center">Nuestra Colección</h2>
 
         <div className="row mt-5">
-            <Guitar />
-            <Guitar />
-            <Guitar />
-            <Guitar />
-            <Guitar />
-            <Guitar />
-            <Guitar />
+            {data.map((guitar)=> (
+                <Guitar 
+                  key={guitar.id}
+                  guitar={guitar}                        
+                  addToCart={addToCart}
+                />
+              )
+            )}           
+            
         </div>
     </main>
 
